@@ -9,7 +9,7 @@ def get_percentage(gender, dic):
         output.append(to_add)
     return output
 
-def make_graph(jsons, categories, stats, categories_title, constants, gender, html_name):
+def make_graph(jsons, categories, categories_title, gender, html_name):
     read_jsons = [json_methods.read_jsonfile_to_dic(j) for j in jsons]
     roles = [key for key in read_jsons[0].keys()]
     
@@ -18,21 +18,22 @@ def make_graph(jsons, categories, stats, categories_title, constants, gender, ht
     
     category_table = []
     for i in range(len(categories)):
-        category_table += [categories[0] for _ in range(len(roles) // 2)]
+        category_table += [categories[i] for _ in range(len(roles) // 2)]
     
     constant_col = [get_percentage(gender, dic) for dic in read_jsons]
     constant_col = [x for xs in constant_col for x in xs] # flatten list of lists
 
-    print(len(roles))
-    print(len(category_table))
-    print(len(constant_col))
+ 
 
     final_table = pd.DataFrame({
-        stats: roles,
+        "Occupation": roles,
         categories_title: category_table,
-        constants: constant_col
+        "Gender Ratio": constant_col
     })
     
+    print(roles)
+    print(category_table)
+    print(constant_col)
     
     fig = go.Figure()
     for contestant, group in final_table.groupby(categories_title):
@@ -41,11 +42,11 @@ def make_graph(jsons, categories, stats, categories_title, constants, gender, ht
         # hovertemplate=hovertemplate_str))
         # "%s=%s<br>%s=%%{x}<br>Gender Ratio=%%{y}<extra></extra>"% categories_title stats Reality))
         #  hovertemplate="Contestant=%s<br>Fruit=%%{x}<br>Number Eaten=%%{y}<extra></extra>"% contestant))
-         fig.add_trace(go.Bar(x=group["Occupation"], y=group["Gender Ratio"], name=contestant,
-        hovertemplate="Reality=%s<br>Occupation=%%{x}<br>Gender Ratio=%%{y}<extra></extra>"% contestant))
-    fig.update_layout(legend_title_text="Choose Reality")
-    fig.update_xaxes(title_text=stats)
-    fig.update_yaxes(title_text=constants)
+        fig.add_trace(go.Bar(x=group["Occupation"], y=group["Gender Ratio"], name=contestant,
+            hovertemplate=categories_title+"=%s<br>Occupation=%%{x}<br>Gender Ratio=%%{y}<extra></extra>"% contestant))
+    fig.update_layout(legend_title_text="Choose "+categories_title)
+    fig.update_xaxes(title_text="Occupation")
+    fig.update_yaxes(title_text="Gender Ratio")
     fig.update_layout(yaxis_tickformat = '.0%')
     fig.write_html('graphs/' + html_name)
 
@@ -54,7 +55,7 @@ def make_graph(jsons, categories, stats, categories_title, constants, gender, ht
 if __name__ == '__main__':
     jsons = ['top_roles_imdb.json', 'top_roles_us_bureau.json']
     categories = ['Cinema', 'Real Life']
-    make_graph(jsons, categories, 'Occupation', 'Reality', 'Gender Ratio', 0, 'men_most_common.html')
+    make_graph(jsons, categories, 'Reality', 0, 'men_most_common.html')
     # imdb_dic = json_methods.read_jsonfile_to_dic('top_roles_imdb.json')
     # real_life_dic = json_methods.read_jsonfile_to_dic('top_roles_us_bureau.json')
     # roles = [key for (key, val) in imdb_dic.items()]
