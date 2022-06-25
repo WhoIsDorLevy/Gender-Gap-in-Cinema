@@ -1,7 +1,8 @@
 import pandas as pd
 import json_methods
 import plotly.graph_objects as go
-import char_studio
+import chart_studio as cs
+
 
 def get_percentage(gender, dic):
     output = []
@@ -48,7 +49,8 @@ def make_graph_ratio(jsons, categories, categories_title, genders, html_name):
     fig.update_xaxes(title_text="Occupation")
     fig.update_yaxes(title_text="Gender Ratio")
     fig.update_layout(yaxis_tickformat = '.0%')
-    fig.write_html('graphs/' + html_name)
+    # fig.write_html('graphs/' + html_name)
+    cs.plotly.plot(fig, filename=html_name, auto_open=True)
 
 def make_graph_quantity(jsons, categories, categories_title, genders, html_name):
     read_jsons = [json_methods.read_jsonfile_to_dic(j) for j in jsons]
@@ -82,22 +84,30 @@ def make_graph_quantity(jsons, categories, categories_title, genders, html_name)
     fig.update_xaxes(title_text="Occupation")
     fig.update_yaxes(title_text="Total Roles")
     # fig.update_layout(yaxis_tickformat = '.0%')
-    fig.write_html('graphs/' + html_name)
+    #fig.write_html('graphs/' + html_name)
+    cs.plotly.plot(fig, filename=html_name, auto_open=True)
 
 
 if __name__ == '__main__':
+
+    username = 'DeGolan'
+    #password = ''
+
+    cs.tools.set_credentials_file(username=username, api_key=password)
+
     common_jsons = ['top_roles_imdb.json', 'top_roles_us_bureau.json']
     common_categories = ['Cinema', 'Real Life']
-    make_graph_ratio(common_jsons, common_categories, 'Reality', [0,0], 'men_most_common.html')
-    make_graph_ratio(common_jsons, common_categories, 'Reality', [1,1], 'women_most_common.html')
+
+    # make_graph_ratio(common_jsons, common_categories, 'Reality', [0,0], 'men_most_common')
+    make_graph_ratio(common_jsons, common_categories, 'Reality', [1,1], 'women_most_common')
 
 
-    make_graph_quantity(['top_roles_imdb_women.json', 'top_roles_imdb_women.json'], ['Men', 'Women'], 'Gender', [0,1], 'top_cinema_roles_women.html')
-    
-    make_graph_ratio(['top_roles_imdb_women_more_than_man.json', 'top_roles_imdb_women_more_than_man.json'], ['Men', 'Women'], 'Gender', [0,1], 'woman_more_than_men_roles.html')
-    make_graph_ratio(['top_generic_roles_imdb.json', 'top_generic_roles_imdb.json'], ['Men', 'Women'], 'Gender', [0,1], 'generic_roles.html')
-    
-    
+    make_graph_quantity(['top_roles_imdb_women.json', 'top_roles_imdb_women.json'], ['Men', 'Women'], 'Gender', [0,1], 'top_cinema_roles_women')
+
+    make_graph_ratio(['top_roles_imdb_women_more_than_man.json', 'top_roles_imdb_women_more_than_man.json'], ['Men', 'Women'], 'Gender', [0,1], 'woman_more_than_men_roles')
+    make_graph_ratio(['top_generic_roles_imdb.json', 'top_generic_roles_imdb.json'], ['Men', 'Women'], 'Gender', [0,1], 'generic_roles')
+
+
     
     
     
