@@ -1,6 +1,7 @@
 import pandas as pd
 import json_methods
 import plotly.graph_objects as go
+import char_studio
 
 def get_percentage(gender, dic):
     output = []
