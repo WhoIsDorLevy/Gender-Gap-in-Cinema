@@ -1,4 +1,5 @@
 import plotly.graph_objects as go
+import chart_studio as cs
 
 def create_bubble_chart():
     size = [0, 8.620620, 0, 0, 11.228836, 0]
@@ -19,7 +20,13 @@ def create_bubble_chart():
     )])
     fig.update_xaxes(visible=False)
     fig.update_yaxes(visible=False)
-    fig.write_html('graphs/total_occupation.html')
+    # fig.write_html('graphs/total_occupation.html')
+    cs.plotly.plot(fig, filename="total_occupation", auto_open=True)
 
 if __name__ == '__main__':
+    username = 'DeGolan'
+    password = ""
+
+    cs.tools.set_credentials_file(username=username, api_key=password)
+
     create_bubble_chart()
