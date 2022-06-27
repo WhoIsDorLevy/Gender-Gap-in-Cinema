@@ -13,18 +13,18 @@ def create_bubble_chart():
         marker=dict(
             color=['rgb(93, 164, 214)', 'rgb(255, 144, 14)',  'rgb(44, 160, 101)', 'rgb(255, 65, 54)','rgb(255, 65, 54)','rgb(255, 65, 54)','rgb(255, 65, 54)','rgb(255, 65, 54)'],
             size=size,
-            sizeref = 2. * 11.228836 / (31.228836 ** 2),
+            sizeref = 2. * 11.228836 / (21.228836 ** 2),
             
 
         )
     )])
     fig.update_xaxes(visible=False)
     fig.update_yaxes(visible=False)
-    # fig.write_html('graphs/total_occupation.html')
+    fig.write_html('graphs/total_occupation.html')
     cs.plotly.plot(fig, filename="total_occupation", auto_open=True)
 
 if __name__ == '__main__':
-    username = 'DeGolan'
+    username = 'DLevy'
     password = ""
 
     cs.tools.set_credentials_file(username=username, api_key=password)
