@@ -49,16 +49,28 @@ def same(item, roles):
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
+    
+    
+
     # #step1
     # mypath = os.getcwd()
     # os.chdir("..")
     # data_path = os.getcwd() + "\\title.principals.tsv\\data.tsv"
     # dict = read_tsv(data_path)
 
-    # #step2
+    
+
+    # #step2 - set things up and get total representation of men and women
     # os.chdir(mypath)  # return to the origin path
     # write_dict_to_json(dict, "dict_before_filter.json")
-
+    dic = read_jsonfile_to_dic("dict_before_filter.json")
+    total_men = 0
+    total_women = 0
+    for lst in dic.values():
+        total_men += lst[0]
+        total_women += lst[1]
+    total_occupation = {"Men": total_men, "Women": total_women}
+    write_dict_to_json(total_occupation, "total_occupation.json")
     # step3 - write file of top roles with number of actors and actresses
     # dic = read_jsonfile_to_dic("dict_before_filter.json")
     # role_list = {"Doctor":["dr.", "doctor"],
