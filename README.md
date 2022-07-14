@@ -2,6 +2,9 @@
 A Project in the course of Digital Humanities, BGU.
 In this project we will research the gap between genders in cinema, and the distance of the results to the real world.
 
+#A link to our website that displays the study results
+https://gomer66.wixsite.com/website
+
 # Background
 Gender inequality in employment is a well-known issue all over the world.
 
